@@ -33,51 +33,75 @@ export default function CreateMissionModal({ onClose, onSuccess }: CreateMission
   }
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg p-6 w-full max-w-md">
-        <h2 className="text-xl font-bold mb-4">Nueva Misión</h2>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Título
+    <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+      <div className="bg-slate-900 border border-slate-700 rounded-2xl shadow-2xl w-full max-w-lg">
+        {/* Header */}
+        <div className="border-b border-slate-700 px-6 py-4">
+          <div className="flex items-center justify-between">
+            <h2 className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
+              Nueva Misión
+            </h2>
+            <button
+              onClick={onClose}
+              className="text-slate-400 hover:text-slate-200 transition-colors text-2xl leading-none"
+              aria-label="Cerrar"
+            >
+              ×
+            </button>
+          </div>
+        </div>
+
+        {/* Form */}
+        <form onSubmit={handleSubmit} className="p-6 space-y-6">
+          <div className="space-y-2">
+            <label className="block text-sm font-semibold text-slate-200">
+              Título de la Misión
             </label>
             <input
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               required
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Ej: Investigación de nuevos materiales"
+              className="w-full px-4 py-3 bg-slate-800 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500/50 focus:border-cyan-500 text-slate-100 placeholder-slate-500 text-base transition-all"
             />
           </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+
+          <div className="space-y-2">
+            <label className="block text-sm font-semibold text-slate-200">
               Descripción
             </label>
             <textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               required
-              rows={4}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              rows={5}
+              placeholder="Describe los detalles de la misión..."
+              className="w-full px-4 py-3 bg-slate-800 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500/50 focus:border-cyan-500 text-slate-100 placeholder-slate-500 text-base resize-none transition-all"
             />
           </div>
+
           {error && (
-            <div className="text-red-600 text-sm">{error}</div>
+            <div className="bg-red-900/30 border border-red-800/50 rounded-lg p-3">
+              <p className="text-red-300 text-sm font-medium">{error}</p>
+            </div>
           )}
-          <div className="flex space-x-4">
-            <button
-              type="submit"
-              disabled={loading}
-              className="flex-1 bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 disabled:opacity-50"
-            >
-              {loading ? 'Creando...' : 'Crear'}
-            </button>
+
+          {/* Actions */}
+          <div className="flex gap-3 pt-4">
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 bg-gray-300 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-400"
+              className="flex-1 bg-slate-700 hover:bg-slate-600 text-slate-200 py-3 px-4 rounded-lg font-medium transition-all"
             >
               Cancelar
+            </button>
+            <button
+              type="submit"
+              disabled={loading}
+              className="flex-1 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white py-3 px-4 rounded-lg font-semibold transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-cyan-500/20"
+            >
+              {loading ? 'Creando...' : 'Crear Misión'}
             </button>
           </div>
         </form>
