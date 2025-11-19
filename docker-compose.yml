@@ -16,20 +16,6 @@ services:
       timeout: 5s
       retries: 5
 
-  # Redis - Opcional, actualmente no se usa en el código
-  # Descomentar si planeas usar Redis en el futuro
-  # redis:
-  #   image: redis:7-alpine
-  #   container_name: amestris-redis
-  #   ports:
-  #     - "6379:6379"
-  #   volumes:
-  #     - redis_data:/data
-  #   healthcheck:
-  #     test: ["CMD", "redis-cli", "ping"]
-  #     interval: 10s
-  #     timeout: 5s
-  #     retries: 5
 
   backend:
     build:
