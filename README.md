@@ -43,8 +43,11 @@ Este sistema permite gestionar de manera eficiente:
 ### Base de Datos
 - **PostgreSQL 15** - Base de datos relacional
 
+### Cola de Mensajes
+- **Redis 7** - Sistema de cola de mensajes para procesamiento asíncrono
+
 ### Infraestructura
-- **Docker & Docker Compose** - Contenedorización
+- **Docker & Docker Compose** - Contenedorización completa
 
 ## 🚀 Instalación
 
@@ -74,6 +77,8 @@ POSTGRES_HOST=localhost POSTGRES_USER=amestris POSTGRES_PASSWORD=amestris123 POS
 4. **Acceder a la aplicación**
    - Frontend: http://localhost:3000
    - Backend API: http://localhost:8000
+   - PostgreSQL: localhost:5432
+   - Redis: localhost:6379
 
 ### Instalación Local (Desarrollo)
 
@@ -489,6 +494,83 @@ Para problemas o preguntas:
 1. Revisar los logs: `docker-compose logs`
 2. Verificar que todos los servicios estén corriendo: `docker-compose ps`
 3. Ejecutar el script de seed si faltan datos: `go run scripts/seed.go`
+
+## 📚 Documentación de la API
+
+### Documentación Completa
+Ver el archivo [API_DOCUMENTATION.md](./API_DOCUMENTATION.md) para documentación detallada de todos los endpoints.
+
+### Colección de Postman
+Importa el archivo `postman_collection.json` en Postman para probar todos los endpoints fácilmente.
+
+**Características de la colección:**
+- Variables de entorno configuradas
+- Autenticación automática (el token se guarda automáticamente después del login)
+- Ejemplos de request/response para cada endpoint
+- Organizada por categorías
+
+## ✅ Cumplimiento de Requerimientos
+
+### Backend (Go)
+- ✅ API REST implementada con Gorilla Mux (sin frameworks como Gin, Fiber, Echo)
+- ✅ Go 1.23+ utilizado
+- ✅ PostgreSQL como base de datos
+- ✅ GORM como ORM
+- ✅ Autenticación JWT implementada
+- ✅ Endpoints CRUD completos para todas las entidades:
+  - ✅ Alquimistas
+  - ✅ Misiones
+  - ✅ Materiales
+  - ✅ Transmutaciones
+  - ✅ Auditorías
+- ✅ Sistema de procesamiento asíncrono:
+  - ✅ Cola de tareas en memoria (TaskQueue)
+  - ✅ Redis disponible para escalabilidad
+  - ✅ Procesamiento de transmutaciones en segundo plano
+  - ✅ Verificaciones automáticas diarias
+  - ✅ Generación automática de auditorías
+
+### Frontend (Next.js/React)
+- ✅ Next.js 14 con TypeScript
+- ✅ Interfaz responsive y moderna
+- ✅ Login y registro de usuarios
+- ✅ Paneles diferenciados:
+  - ✅ Panel de Alquimista
+  - ✅ Panel de Supervisor
+- ✅ Visualizaciones de datos (estadísticas, listas)
+- ✅ Notificaciones en tiempo real vía WebSocket
+- ✅ Uso correcto de hooks (useState, useEffect)
+- ✅ Código completamente tipado (sin `any` injustificados)
+
+### Infraestructura (Docker)
+- ✅ Docker Compose configurado
+- ✅ Backend contenerizado
+- ✅ Frontend contenerizado
+- ✅ PostgreSQL contenerizado
+- ✅ Redis contenerizado
+- ✅ Script único para levantar todo el entorno
+
+### Entregables
+- ✅ Repositorio con estructura clara
+- ✅ docker-compose.yml funcional
+- ✅ Script de inicialización de base de datos (seed.go)
+- ✅ Documentación de API (API_DOCUMENTATION.md)
+- ✅ Colección de Postman (postman_collection.json)
+- ✅ README.md completo con manual de despliegue
+
+### Sistema Asíncrono
+- ✅ Procesamiento de transmutaciones en segundo plano
+- ✅ Verificaciones automáticas de uso de materiales
+- ✅ Detección de misiones no cerradas
+- ✅ Generación automática de auditorías
+- ✅ Notificaciones WebSocket en tiempo real
+
+### Características Adicionales
+- ✅ Sistema de auditoría automática completo
+- ✅ Verificaciones diarias programadas
+- ✅ WebSocket para actualizaciones en tiempo real
+- ✅ Interfaz moderna con tema oscuro
+- ✅ Diseño responsive
 
 ## 📄 Licencia
 

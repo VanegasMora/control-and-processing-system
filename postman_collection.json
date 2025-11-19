@@ -1,0 +1,394 @@
+{
+  "info": {
+    "name": "Sistema de Alquimia Estatal - Amestris",
+    "description": "API REST para la gestión de alquimistas, misiones, transmutaciones y auditorías",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "version": "1.0.0"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8000",
+      "type": "string"
+    },
+    {
+      "key": "token",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Autenticación",
+      "item": [
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"edward@amestris.gov\",\n  \"password\": \"password123\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/auth/login",
+              "host": ["{{base_url}}"],
+              "path": ["api", "auth", "login"]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.collectionVariables.set('token', jsonData.token);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Nuevo Alquimista\",\n  \"email\": \"nuevo@amestris.gov\",\n  \"password\": \"password123\",\n  \"rank\": \"apprentice\",\n  \"specialty\": \"combat\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/auth/register",
+              "host": ["{{base_url}}"],
+              "path": ["api", "auth", "register"]
+            }
+          }
+        },
+        {
+          "name": "Get Profile",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/auth/profile",
+              "host": ["{{base_url}}"],
+              "path": ["api", "auth", "profile"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Alquimistas",
+      "item": [
+        {
+          "name": "Listar Alquimistas",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/alchemists",
+              "host": ["{{base_url}}"],
+              "path": ["api", "alchemists"]
+            }
+          }
+        },
+        {
+          "name": "Obtener Alquimista",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/alchemists/1",
+              "host": ["{{base_url}}"],
+              "path": ["api", "alchemists", "1"]
+            }
+          }
+        },
+        {
+          "name": "Crear Alquimista",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Nuevo Alquimista\",\n  \"email\": \"nuevo@amestris.gov\",\n  \"password\": \"password123\",\n  \"rank\": \"state\",\n  \"specialty\": \"combat\",\n  \"role\": \"alchemist\",\n  \"certified\": true\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/alchemists",
+              "host": ["{{base_url}}"],
+              "path": ["api", "alchemists"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Misiones",
+      "item": [
+        {
+          "name": "Listar Misiones",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/missions",
+              "host": ["{{base_url}}"],
+              "path": ["api", "missions"]
+            }
+          }
+        },
+        {
+          "name": "Crear Misión",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Nueva Misión\",\n  \"description\": \"Descripción de la misión\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/missions",
+              "host": ["{{base_url}}"],
+              "path": ["api", "missions"]
+            }
+          }
+        },
+        {
+          "name": "Actualizar Estado de Misión",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"approved\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/missions/1/status",
+              "host": ["{{base_url}}"],
+              "path": ["api", "missions", "1", "status"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Materiales",
+      "item": [
+        {
+          "name": "Listar Materiales",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/materials",
+              "host": ["{{base_url}}"],
+              "path": ["api", "materials"]
+            }
+          }
+        },
+        {
+          "name": "Crear Material",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Nuevo Material\",\n  \"type\": \"metal\",\n  \"description\": \"Descripción del material\",\n  \"stock\": 1000.0,\n  \"unit\": \"kg\",\n  \"price\": 10.0\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/materials",
+              "host": ["{{base_url}}"],
+              "path": ["api", "materials"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Transmutaciones",
+      "item": [
+        {
+          "name": "Listar Transmutaciones",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/transmutations",
+              "host": ["{{base_url}}"],
+              "path": ["api", "transmutations"]
+            }
+          }
+        },
+        {
+          "name": "Crear Transmutación",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"description\": \"Transmutación de hierro en acero\",\n  \"input_materials\": [\n    {\n      \"material_id\": 1,\n      \"quantity\": 500.0\n    }\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/transmutations",
+              "host": ["{{base_url}}"],
+              "path": ["api", "transmutations"]
+            }
+          }
+        },
+        {
+          "name": "Actualizar Estado de Transmutación",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"approved\",\n  \"result\": \"Transmutación aprobada\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/transmutations/1/status",
+              "host": ["{{base_url}}"],
+              "path": ["api", "transmutations", "1", "status"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Auditorías",
+      "item": [
+        {
+          "name": "Listar Auditorías",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/audits",
+              "host": ["{{base_url}}"],
+              "path": ["api", "audits"]
+            }
+          }
+        },
+        {
+          "name": "Resolver Auditoría",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/audits/1/resolve",
+              "host": ["{{base_url}}"],
+              "path": ["api", "audits", "1", "resolve"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
+
